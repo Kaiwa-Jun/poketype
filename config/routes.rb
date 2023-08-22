@@ -1,3 +1,6 @@
 Rails.application.routes.draw do
-  root "static_pages#top"
+  get 'quiz/start', to: 'quiz#start'
+  get 'quiz/result', to: 'quiz#result'
+  get 'home/index'
+  root "home#index"
 end
