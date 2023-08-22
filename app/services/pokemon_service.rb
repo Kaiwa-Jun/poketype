@@ -11,8 +11,9 @@ class PokemonService
         Pokemon.create!(
           name: details['name'],
           type: primary_type,
-          secondary_type: details['types'][1] ? Type.find_by(name: details['types'][1]['type']['name']) : nil
-          # 他の必要な属性もここで設定することができます
+          secondary_type: details['types'][1] ? Type.find_by(name: details['types'][1]['type']['name']) : nil,
+          image_url: details['image_url'] 
+        # 他の必要な属性もここで設定することができます
         )
       end
     rescue => e
