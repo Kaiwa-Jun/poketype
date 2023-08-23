@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ポケモンクイズ</title>
+
+    <%= stylesheet_link_tag 'quiz', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
+<body>
+    <h1>クイズ画面</h1>
+    <h1 class="question"><span class="type-name"><%= @type.name %>タイプ</span><br>のポケモンの画像を全て選択してください。</h1>
+
+    <div class="pokemon-grid">
+      <% @pokemons.each do |pokemon| %> <!-- @pokemonsは適切なポケモンの配列 -->
+        <div class="pokemon-cell" onclick="toggleSelection(this)">
+          <img src="<%= pokemon.image_url %>" alt="<%= pokemon.name %>">
+        </div>
+      <% end %>
+    </div>
+
+    <div id="confirm-button-container">
+      <button id="confirm">確認</button>
+    </div>
+
+
+</body>
+</html>

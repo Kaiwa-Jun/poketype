@@ -1,0 +1,60 @@
+.question {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: hsl(0, 0%, 100%);
+  font-weight: bold;
+  background-color: #4990e2;
+  text-align: left; /* 左寄せ */
+  padding: 20px;
+}
+
+.type-name {
+  font-size: 30px; /* タイプ名のフォントサイズを大きく */
+  margin-bottom: 10px; /* タイプ名とタイプ相性の間隔を開ける */
+}
+
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3列に分割 */
+  gap: 10px; /* セル間の隙間 */
+}
+
+.pokemon-cell {
+  width: 100%;
+  position: relative;
+}
+
+.pokemon-cell::before {
+  content: "";
+  display: block;
+  padding-top: 100%; /* アスペクト比を1:1に保つ */
+}
+
+.pokemon-cell img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 画像をセルにフィットさせる */
+  cursor: pointer; /* ここを追加 */
+}
+
+#confirm-button-container {
+  text-align: right; /* ボタンを右寄せにする */
+  margin-top: 120px; /* 画像エリアとの間隔を開ける */
+}
+
+#confirm {
+  display: inline-block; /* インライン要素として表示 */
+  background-color: #4990e2; /* 水色 */
+  color: #ffffff; /* 文字色は白 */
+  border: none; /* 枠なし */
+  box-shadow: none; /* 影なし */
+  padding: 10px 20px; /* ボタンの内側の余白（調整が必要な場合は変更） */
+  cursor: pointer; /* ホバー時にカーソルをポインターに */
+  transition: background-color 0.3s; /* 背景色の変化を滑らかに */
+}
+
+#confirm:hover {
+  background-color: #b2ebf2; /* ホバー時に薄い水色に */
+}
