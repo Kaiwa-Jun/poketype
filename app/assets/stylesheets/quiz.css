@@ -58,3 +58,8 @@
 #confirm:hover {
   background-color: #b2ebf2; /* ホバー時に薄い水色に */
 }
+
+#confirm-button-container {
+  margin-top: 150px; /* 上部の余白を追加 */
+  text-align: center; /* ボタンを中央寄せにする */
+}

@@ -2,6 +2,12 @@ class QuizController < ApplicationController
   before_action :set_question_number
 
   def new
+    @total_questions = 5 # 合計問題数はここで設定
+    # トータル問題数を超えた場合、結果画面にリダイレクト
+    if session[:question_number] > @total_questions
+      redirect_to quiz_result_path and return
+    end
+
     difficulty_level = [session[:question_number], 3].min # 難易度は最大3
 
     # "unknown" と "shadow" タイプを除外
@@ -37,20 +43,34 @@ class QuizController < ApplicationController
   def confirm
     selected_pokemons = params[:selected_pokemons].split(',').map(&:to_i)
     # 正解判定などのロジック
+
+    # 5問目の後に結果画面へリダイレクト
+    if session[:question_number] >= 5
+      redirect_to action: :result
+    else
+      redirect_to action: :new
+    end
   end
 
   def start
-    # クイズ開始ロジック
+    session[:question_number] = 0 # カウントの初期化
+    redirect_to action: :new
   end
 
   def result
     # 結果表示ロジック
   end
 
+  def restart
+    session[:question_number] = 0 # セッションをリセット
+    redirect_to quiz_new_path # クイズ画面に遷移
+  end
+
   private
 
   def set_question_number
     session[:question_number] ||= 0
-    session[:question_number] += 1
+    # カウントアップはnewアクションのみで行う
+    session[:question_number] += 1 if action_name == 'new'
   end
 end

@@ -23,11 +23,14 @@
       <% end %>
     </div>
 
-    <form id="quiz-form" action="/quiz/confirm" method="post">
-      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-      <input type="hidden" id="selected_pokemons" name="selected_pokemons" value="">
-      <button id="confirm" type="submit">確認</button>
-    </form>
+    <div id="confirm-button-container">
+      <form id="quiz-form" action="/quiz/confirm" method="post">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <input type="hidden" id="selected_pokemons" name="selected_pokemons" value="">
+        <button id="confirm" type="submit">確認</button>
+      </form>
+    </div>
+
 
     <script>
       var selectedPokemons = [];
