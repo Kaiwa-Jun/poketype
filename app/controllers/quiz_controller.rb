@@ -2,75 +2,79 @@ class QuizController < ApplicationController
   before_action :set_question_number
 
   def new
-    @total_questions = 5 # 合計問題数はここで設定
-    # トータル問題数を超えた場合、結果画面にリダイレクト
+    @total_questions = 5
     if session[:question_number] > @total_questions
       redirect_to quiz_result_path and return
     end
 
-    difficulty_level = [session[:question_number], 3].min # 難易度は最大3
+    difficulty_level = [session[:question_number], 3].min
 
-    # "unknown" と "shadow" タイプを除外
     excluded_types = ['unknown', 'shadow']
     @type = Type.where.not(name: excluded_types).order("RAND()").first
 
-    # リアルポケモン6匹をランダムに選ぶ
     real_pokemons = Pokemon.where(type_id: @type.id).where('is_fake = ? OR is_fake IS NULL', false).order('RAND()').limit(6).to_a
-
-    # フェイクポケモン3匹をランダムに選ぶ
     fake_pokemons = Pokemon.where(fake_type_id: @type.id, is_fake: true).order('RAND()').limit(3).to_a
 
-    # フェイクポケモンが足りない場合、リアルポケモンから追加
     if fake_pokemons.count < 3
       extra_real_pokemons = Pokemon.where(type_id: @type.id).where('is_fake = ? OR is_fake IS NULL', false).where.not(id: real_pokemons.map(&:id)).order('RAND()').limit(3 - fake_pokemons.count).to_a
       real_pokemons += extra_real_pokemons
     end
 
-    # デバッグのためのログ出力
-    puts "Real Pokemons:"
-    puts real_pokemons.inspect
-    puts "Fake Pokemons:"
-    puts fake_pokemons.inspect
-
-    # リアルポケモンとフェイクポケモンを合わせてシャッフル
     @pokemons = (real_pokemons + fake_pokemons).shuffle
+    session[:pokemons] = @pokemons.map { |pokemon| pokemon.id }
+    session[:correct_pokemons] = real_pokemons.map { |pokemon| pokemon.id }
 
     @current_question_number = session[:question_number]
-    @total_questions = 5 # 合計問題数はここで設定
+    @total_questions = 5
+    session[:type_id] = @type.id
+    session[:type_name] = @type.name
   end
 
-
   def confirm
-    selected_pokemons = params[:selected_pokemons].split(',').map(&:to_i)
-    # 正解判定などのロジック
+    @total_questions = 5
+    selected_pokemons_indexes = params[:selected_pokemons].split(',').map(&:to_i)
+    selected_pokemons = selected_pokemons_indexes.map { |index| session[:pokemons][index.to_i] }
+    correct_pokemons = session[:correct_pokemons]
 
-    # 5問目の後に結果画面へリダイレクト
-    if session[:question_number] >= 5
-      redirect_to action: :result
+is_correct = selected_pokemons.sort == correct_pokemons.sort
+session[:results] << { question: session[:type_name], correct: is_correct, correct_pokemons: correct_pokemons, all_pokemons: session[:pokemons] }
+  puts "Debugging session[:results]:" # デバッグ用のログ出力
+  puts session[:results].inspect  # デバッグ用のログ出力
+
+
+    if session[:question_number] >= @total_questions
+      redirect_to quiz_result_path
     else
-      redirect_to action: :new
+      redirect_to quiz_new_path
     end
   end
 
   def start
-    session[:question_number] = 0 # カウントの初期化
+    session[:question_number] = 0
+    session[:results] = [] 
     redirect_to action: :new
   end
 
-  def result
-    # 結果表示ロジック
-  end
+def result
+  @total_questions = 5
+  puts "Debugging session[:results]:"
+  puts session[:results].inspect
+  puts "Debugging the first all_pokemons:"
+  puts session[:results].first[:all_pokemons] # 最初の問題の all_pokemons の内容を出力
+end
+
 
   def restart
-    session[:question_number] = 0 # セッションをリセット
-    redirect_to quiz_new_path # クイズ画面に遷移
+    session[:question_number] = 0
+    session[:results] = []
+    redirect_to quiz_new_path
   end
 
   private
 
   def set_question_number
     session[:question_number] ||= 0
-    # カウントアップはnewアクションのみで行う
     session[:question_number] += 1 if action_name == 'new'
+    session[:results] ||= []
   end
 end

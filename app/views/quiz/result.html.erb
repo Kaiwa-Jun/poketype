@@ -1,5 +1,55 @@
 <div class="container">
   <h2>結果画面</h2>
-  <!-- 正解数表示、Twitter共有ボタンなど -->
+  <p>正解数: <%= session[:results].count { |result| result[:correct] } %> / <%= @total_questions %></p>
+  <ul>
+    <% session[:results].each_with_index do |result, index| %>
+      <li>
+        <h3>Question <%= index + 1 %>: <%= result[:question] %></h3>
+        <p>Result: <%= result[:correct] ? '正解' : '不正解' %></p>
+
+        <%# 以下の行でデバッグ情報を出力 %>
+        <%= "Debugging result: #{result.inspect}" %>
+        <%= "Debugging result[:all_pokemons]: #{result[:all_pokemons].inspect}" %>
+        <%= "Is result[:all_pokemons] nil?: #{result[:all_pokemons].nil?}" %>
+        <%= "Is result[:all_pokemons] empty?: #{result[:all_pokemons]&.empty?}" %>
+
+<% if result['all_pokemons'].present? %>
+  <div class="pokemon-grid">
+    <% result['all_pokemons'].each_with_index do |pokemon_id, index| %>
+      <% pokemon = Pokemon.find_by(id: pokemon_id) %>
+<% if pokemon.present? && pokemon.image_url.present? %>
+  <div class="pokemon-cell <%= result['correct_pokemons'].include?(pokemon_id) ? 'selected' : '' %>">
+    <%= image_tag pokemon.image_url %>
+    <%= pokemon.name %>
+  </div>
+<% else %>
+  <div class="pokemon-cell">
+    <%= "Pokemon with ID #{pokemon_id} not found or image missing" %>
+  </div>
+<% end %>
+
+
+
+      <div class="pokemon-cell <%= result['correct_pokemons'].include?(pokemon_id) ? 'selected' : '' %>">
+        <%= image_tag pokemon.image_url %>
+        <%= pokemon.name %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>この問題には 'all_pokemons' のデータがありません。</p>
+<% end %>
+
+
+      </li>
+    <% end %>
+  </ul>
   <%= link_to 'もう一度', quiz_restart_path, class: 'btn btn-primary' %>
 </div>
+
+<style>
+  .selected {
+    border: 2px solid red;
+  }
+  /* その他のスタイリング */
+</style>
