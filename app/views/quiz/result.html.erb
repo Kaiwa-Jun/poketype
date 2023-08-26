@@ -9,14 +9,22 @@
         <h3>Question <%= index + 1 %>: <%= result[:question] %></h3>
         <p>Result: <%= result[:correct] ? '正解' : '不正解' %></p>
 
-        <%# 以下の行でデバッグ情報を出力 %>
-        <%= "Debugging result: #{result.inspect}" %>
-        <%= "Debugging result[:all_pokemons]: #{result[:all_pokemons].inspect}" %>
-        <%= "Is result[:all_pokemons] nil?: #{result[:all_pokemons].nil?}" %>
-        <%= "Is result[:all_pokemons] empty?: #{result[:all_pokemons]&.empty?}" %>
+<%# 以下の行でデバッグ情報を出力 %>
+<!--<%= "Debugging result: #{result.inspect}" %>-->
+<!--<%= "Debugging result[:all_pokemons]: #{result[:all_pokemons].inspect}" %>-->
+<% result['all_pokemons'].each do |pokemon_id| %>
+  <% pokemon = Pokemon.find_by(id: pokemon_id) %>
+  <% if pokemon.present? %>
+    <%= "Pokemon Name: #{pokemon.name}, Type ID: #{pokemon.type_id}, Secondary Type ID: #{pokemon.secondary_type_id}, Fake Type ID: #{pokemon.fake_type_id}" %><br>
+  <% end %>
+<% end %>
+
+<%= "Is result[:all_pokemons] nil?: #{result[:all_pokemons].nil?}" %>
+<%= "Is result[:all_pokemons] empty?: #{result[:all_pokemons]&.empty?}" %>
+
 
         <%# ここで出題されたポケモンの名前とタイプを出力 %>
-        <% if result['all_pokemons'].present? %>
+        <!--<% if result['all_pokemons'].present? %>
           <% result['all_pokemons'].each do |pokemon_id| %>
             <% pokemon = Pokemon.find_by(id: pokemon_id) %>
             <% if pokemon.present? %>
@@ -25,7 +33,7 @@
               <%= "Pokemon with ID #{pokemon_id} not found" %><br>
             <% end %>
           <% end %>
-        <% end %>
+        <% end %>-->
 
 <% if result['all_pokemons'].present? %>
   <div class="pokemon-grid">
