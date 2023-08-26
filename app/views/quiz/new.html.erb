@@ -3,25 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>ポケモンクイズ</title>
-
     <%= stylesheet_link_tag 'quiz', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <style>
+      .selected {
+        border: 2px solid red; /* 選択された画像のハイライト表示 */
+      }
+    </style>
 </head>
 <body>
     <h1>クイズ画面</h1>
+    <h2><%= @current_question_number %>/<%= @total_questions %>問目</h2>
     <h1 class="question"><span class="type-name"><%= @type.name %>タイプ</span><br>のポケモンの画像を全て選択してください。</h1>
 
     <div class="pokemon-grid">
-      <% @pokemons.each do |pokemon| %> <!-- @pokemonsは適切なポケモンの配列 -->
-        <div class="pokemon-cell" onclick="toggleSelection(this)">
+      <% @pokemons.each_with_index do |pokemon, index| %>
+        <div class="pokemon-cell" onclick="toggleSelection(this, <%= index %>)">
           <img src="<%= pokemon.image_url %>" alt="<%= pokemon.name %>">
         </div>
       <% end %>
     </div>
 
     <div id="confirm-button-container">
-      <button id="confirm">確認</button>
+      <form id="quiz-form" action="/quiz/confirm" method="post">
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+        <input type="hidden" id="selected_pokemons" name="selected_pokemons" value="">
+        <button id="confirm" type="submit">確認</button>
+      </form>
     </div>
 
+
+    <script>
+      var selectedPokemons = [];
+
+      function toggleSelection(element, index) {
+        if (selectedPokemons.includes(index)) {
+          selectedPokemons = selectedPokemons.filter(i => i !== index);
+          element.classList.remove('selected');
+        } else {
+          selectedPokemons.push(index);
+          element.classList.add('selected');
+        }
+      }
+
+      document.getElementById('confirm').addEventListener('click', function() {
+        document.getElementById('selected_pokemons').value = selectedPokemons.join(',');
+      });
+    </script>
 
 </body>
 </html>
