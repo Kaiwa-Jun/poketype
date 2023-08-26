@@ -30,24 +30,27 @@ class QuizController < ApplicationController
     session[:type_name] = @type.name
   end
 
-  def confirm
-    @total_questions = 5
-    selected_pokemons_indexes = params[:selected_pokemons].split(',').map(&:to_i)
-    selected_pokemons = selected_pokemons_indexes.map { |index| session[:pokemons][index.to_i] }
-    correct_pokemons = session[:correct_pokemons]
+def confirm
+  @total_questions = 5
+  selected_pokemons_indexes = params[:selected_pokemons].split(',').map(&:to_i)
+  selected_pokemons_ids = selected_pokemons_indexes.map { |index| session[:pokemons][index.to_i] }
+  correct_type_id = session[:type_id]  # 問題で指定されたタイプID
 
-is_correct = selected_pokemons.sort == correct_pokemons.sort
-session[:results] << { question: session[:type_name], correct: is_correct, correct_pokemons: correct_pokemons, all_pokemons: session[:pokemons] }
-  puts "Debugging session[:results]:" # デバッグ用のログ出力
-  puts session[:results].inspect  # デバッグ用のログ出力
+  # 選択されたポケモンのtype_idを取得
+  selected_pokemons_type_ids = Pokemon.where(id: selected_pokemons_ids).pluck(:type_id)
 
+  # 選択された全てのポケモンのtype_idが問題で指定されたタイプIDと一致するか確認
+  is_correct = selected_pokemons_type_ids.all? { |type_id| type_id == correct_type_id }
 
-    if session[:question_number] >= @total_questions
-      redirect_to quiz_result_path
-    else
-      redirect_to quiz_new_path
-    end
+  session[:results] << { question: session[:type_name], correct: is_correct, correct_pokemons: session[:correct_pokemons], all_pokemons: session[:pokemons] }
+
+  if session[:question_number] >= @total_questions
+    redirect_to quiz_result_path
+  else
+    redirect_to quiz_new_path
   end
+end
+
 
   def start
     session[:question_number] = 0
