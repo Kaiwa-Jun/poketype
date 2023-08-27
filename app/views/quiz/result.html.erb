@@ -2,12 +2,13 @@
 
 <div class="container">
   <h2>結果画面</h2>
-  <p>正解数: <%= session[:results].count { |result| result[:correct] } %> / <%= @total_questions %></p>
+  <p>正解数: <%= @correct_count %> / <%= @total_questions %></p>
   <ul>
     <% session[:results].each_with_index do |result, index| %>
       <li>
-        <h3>Question <%= index + 1 %>: <%= result[:question] %></h3>
-        <p>Result: <%= result[:correct] ? '正解' : '不正解' %></p>
+        <h3>Question <%= index + 1 %>: <%= result['question'] %></h3>
+        <p>Result: <%= result['correct'] ? '正解' : '不正解' %></p>
+
 
 <%# 以下の行でデバッグ情報を出力 %>
 <!--<%= "Debugging result: #{result.inspect}" %>-->
