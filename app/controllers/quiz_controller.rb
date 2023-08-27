@@ -30,10 +30,11 @@ def new
     fake_count, same_type_count, diff_type_count = 0, 0, 0
   end
 
-  # ポケモンの選出
-  fake_pokemons = Pokemon.where(fake_type_id: @type.id, is_fake: true).order('RAND()').limit(fake_count).to_a
-  same_type_pokemons = Pokemon.where('(type_id = ? OR secondary_type_id = ?)', @type.id, @type.id).where.not(id: fake_pokemons.map(&:id)).order('RAND()').limit(same_type_count).to_a
-  diff_type_pokemons = Pokemon.where.not('(type_id = ? OR secondary_type_id = ?)', @type.id, @type.id).where.not(id: fake_pokemons.map(&:id) + same_type_pokemons.map(&:id)).order('RAND()').limit(diff_type_count).to_a
+# ポケモンの選出
+fake_pokemons = Pokemon.where(fake_type_id: @type.id, is_fake: true).where("image_url IS NOT NULL").order('RAND()').limit(fake_count).to_a
+same_type_pokemons = Pokemon.where('(type_id = ? OR secondary_type_id = ?)', @type.id, @type.id).where.not(id: fake_pokemons.map(&:id)).where("image_url IS NOT NULL").order('RAND()').limit(same_type_count).to_a
+diff_type_pokemons = Pokemon.where.not('(type_id = ? OR secondary_type_id = ?)', @type.id, @type.id).where.not(id: fake_pokemons.map(&:id) + same_type_pokemons.map(&:id)).where("image_url IS NOT NULL").order('RAND()').limit(diff_type_count).to_a
+
 
   # 出題ポケモンの補充
   total_needed = fake_count + same_type_count + diff_type_count
