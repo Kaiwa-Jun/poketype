@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 require 'rest-client'
 require 'json'
 
+# PokemonApiService is responsible for fetching data from the PokeAPI.
 class PokemonApiService
   BASE_URL = 'https://pokeapi.co/api/v2/'
 
@@ -23,4 +26,3 @@ class PokemonApiService
     details.merge('image_url' => image_url)
   end
 end
-

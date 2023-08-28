@@ -1,3 +1,7 @@
+# This migration creates the pokemons table
+# frozen_string_literal: true
+
+###
 class CreatePokemons < ActiveRecord::Migration[7.0]
   def change
     create_table :pokemons do |t|
@@ -11,5 +15,5 @@ class CreatePokemons < ActiveRecord::Migration[7.0]
       t.timestamps
     end
     add_foreign_key :pokemons, :types, column: :fake_type_id
-end
+  end
 end

@@ -9,8 +9,9 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
+# frozen_string_literal: true
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_22_175111) do
+ActiveRecord::Schema[7.0].define(version: 20_230_822_175_111) do
   create_table "pokemon_types", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "pokemon_id", null: false
     t.bigint "type_id", null: false
