@@ -15,3 +15,7 @@ Gemspec/DeprecatedAttributeAssignment:
 
 Gemspec/DevelopmentDependencies:
   Enabled: true
+Style/StringLiterals:
+  Enabled: false
+AllCops:
+  NewCops: enable
