@@ -1,5 +1,8 @@
-require_relative "boot"
+# This is the entry point for the Rails application.
+# frozen_string_literal: true
 
+###
+require_relative "boot"
 require "rails"
 # Pick the frameworks you want:
 require "active_model/railtie"
@@ -17,8 +20,9 @@ require "action_cable/engine"
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
-
+# Application is the entry point for the Rails application.
 module App
+  # Application class for the Rails app
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0

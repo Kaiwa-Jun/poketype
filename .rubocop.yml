@@ -10,6 +10,10 @@
 # See https://docs.rubocop.org/rubocop/configuration
 AllCops:
   NewCops: enable
+  Exclude:
+    - "bin/**/*"
+    - "db/schema.rb"
+
 Gemspec/DeprecatedAttributeAssignment:
   Enabled: true
 
@@ -17,5 +21,3 @@ Gemspec/DevelopmentDependencies:
   Enabled: true
 Style/StringLiterals:
   Enabled: false
-AllCops:
-  NewCops: enable

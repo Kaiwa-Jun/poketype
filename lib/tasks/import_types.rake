@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :import do
   desc 'Import types from PokeAPI'
   task types: :environment do
@@ -8,4 +10,3 @@ namespace :import do
     puts "Imported #{types.count} types."
   end
 end
-
