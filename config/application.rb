@@ -37,5 +37,10 @@ module App
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.before_configuration do
+      I18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+      I18n.default_locale = :ja
+      I18n.reload!
+    end
   end
 end
