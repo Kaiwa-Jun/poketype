@@ -3,10 +3,15 @@
 <div class="container">
   <h2>結果画面</h2>
   <p>正解数: <%= @correct_count %> / <%= @total_questions %></p>
-  <ul>
+  <ul class="answers">
     <% session[:results].each_with_index do |result, index| %>
-      <li>
-        <h3>Question <%= index + 1 %>: <%= t("types.#{result['question']}") %></h3>
+      <li class="answer">
+        <h3>Question <%= index + 1 %>: 
+          <span class="badge <%= "type-#{result['question']}" %>">
+            <%= t("types.#{result['question']}") %>
+          </span>
+        </h3>
+
         <p><%= result['correct'] ? '正解！' : '不正解' %></p>
         <!--<% result['all_pokemons'].each do |pokemon_id| %>
           <% pokemon = Pokemon.find_by(id: pokemon_id) %>
