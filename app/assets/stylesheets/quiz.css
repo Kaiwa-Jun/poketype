@@ -196,3 +196,18 @@
   padding: 2px 8px; /* 内側の余白 */
   /* その他のスタイリング（背景色、文字色など） */
 }
+
+.button-container {
+  text-align: center; /* ボタンを中央寄せ */
+  margin-top: 20px; /* 上部の余白 */
+}
+
+.btn {
+  margin-right: 10px; /* ボタン間の余白 */
+  margin-left: 10px; /* ボタン間の余白 */
+}
+
+.btn-share {
+  background-color: #f2f2f2; /* 任意の背景色 */
+  color: black; /* 任意の文字色 */
+}
