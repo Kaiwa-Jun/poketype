@@ -1,12 +1,12 @@
 <%= stylesheet_link_tag 'quiz', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-<div class="container">
+<div class="container result-page">
   <h2>結果画面</h2>
   <p>正解数: <%= @correct_count %> / <%= @total_questions %></p>
   <ul class="answers">
     <% session[:results].each_with_index do |result, index| %>
       <li class="answer">
-        <h3>Question <%= index + 1 %>: 
+        <h3>Question <%= index + 1 %>:
           <span class="badge <%= "type-#{result['question']}" %>">
             <%= t("types.#{result['question']}") %>
           </span>
@@ -27,8 +27,20 @@
               <% if pokemon.present? && pokemon.image_url.present? %>
                 <!-- pokemon-cell クラスを追加 -->
                 <div class="pokemon-cell <%= result['correct_pokemons'].include?(pokemon_id) ? 'selected' : '' %>">
-                  <%= image_tag pokemon.image_url %>
-                  <!--<%= pokemon.name %>-->
+                  <%= image_tag pokemon.image_url, class: "pokemon-image" %>
+                  <div class="checkmark">
+                    <%= image_tag 'checkmark.svg', class: "checkicon" %>
+                  </div>
+                  <div class="pokemon-types"> <!-- タイプを囲むdivを追加 -->
+                    <span class="badge type-<%= type_id_to_name(pokemon.type_id) %>">
+                      <%= t("types.#{type_id_to_name(pokemon.type_id)}") %>
+                    </span>
+                    <% if pokemon.secondary_type_id.present? %> <!-- 2つ目のタイプが存在する場合 -->
+                      <span class="badge type-<%= type_id_to_name(pokemon.secondary_type_id) %>">
+                        <%= t("types.#{type_id_to_name(pokemon.secondary_type_id)}") %>
+                      </span>
+                    <% end %>
+                  </div>
                 </div>
               <% else %>
                 <div class="pokemon-cell">
@@ -47,8 +59,10 @@
 </div>
 
 <style>
-  .selected {
-    border: 2px solid red;
+  .result-page .pokemon-image {
+    cursor: default !important;
   }
-  /* その他のスタイリング */
+  .result-page .checkicon {
+    cursor: default !important;
+  }
 </style>
