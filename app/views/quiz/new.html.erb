@@ -13,7 +13,7 @@
 <body>
     <h1>クイズ画面</h1>
     <h2><%= @current_question_number %>/<%= @total_questions %>問目</h2>
-    <h1 class="question"><span class="type-name"><%= @type.name %>タイプ</span><br>のポケモンの画像を全て選択してください。</h1>
+    <h1 class="question"><span class="type-name"><%= t("types.#{@type.name}") %>タイプ</span><br>のポケモンの画像を全て選択してください。</h1>
 
     <div class="pokemon-grid">
       <% @pokemons.each_with_index do |pokemon, index| %>
