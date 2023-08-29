@@ -4,11 +4,6 @@
     <meta charset="UTF-8">
     <title>ポケモンクイズ</title>
     <%= stylesheet_link_tag 'quiz', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <style>
-      .selected {
-        border: 2px solid red; /* 選択された画像のハイライト表示 */
-      }
-    </style>
 </head>
 <body>
     <h1>クイズ画面</h1>
@@ -19,16 +14,27 @@
       <% @pokemons.each_with_index do |pokemon, index| %>
         <div class="pokemon-cell" onclick="toggleSelection(this, <%= index %>)">
           <img src="<%= pokemon.image_url %>" alt="<%= pokemon.name %>">
+          <div class="checkmark">
+            <%= image_tag 'checkmark.svg' %>
+          </div>
         </div>
       <% end %>
     </div>
 
     <div id="confirm-button-container">
-      <form id="quiz-form" action="/quiz/confirm" method="post">
-        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-        <input type="hidden" id="selected_pokemons" name="selected_pokemons" value="">
-        <button id="confirm" type="submit">確認</button>
-      </form>
+      <div id="button-and-icons">
+        <!-- アイコンを横並びにするコンテナ -->
+        <div id="icon-container">
+          <%= image_tag 'arrow-clockwise.svg', class: 'icon rotate-icon' %>
+          <%= image_tag 'headphones.svg', class: 'icon' %>
+          <%= image_tag 'info-circle.svg', class: 'icon' %>
+        </div>
+        <form id="quiz-form" action="/quiz/confirm" method="post">
+          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+          <input type="hidden" id="selected_pokemons" name="selected_pokemons" value="">
+          <button id="confirm" type="submit">確認</button>
+        </form>
+      </div>
     </div>
 
 
@@ -48,6 +54,12 @@
       document.getElementById('confirm').addEventListener('click', function() {
         document.getElementById('selected_pokemons').value = selectedPokemons.join(',');
       });
+
+      if (selectedPokemons.includes(index)) {
+        element.classList.remove('selected');
+      } else {
+        element.classList.add('selected');
+      }
     </script>
 
 </body>
