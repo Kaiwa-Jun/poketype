@@ -19,10 +19,10 @@ class PokemonApiService
     JSON.parse(response.body)['results']
   end
 
-  def self.fetch_pokemon_details(pokemon_url)
-    response = RestClient.get(pokemon_url)
+  def self.fetch_pokemon_details(pokemon_api_url)
+    response = RestClient.get(pokemon_api_url)
     details = JSON.parse(response.body)
-    image_url = details['sprites']['front_default']
+    image_url = details['sprites']['other']['official-artwork']['front_default']
     details.merge('image_url' => image_url)
   end
 end
