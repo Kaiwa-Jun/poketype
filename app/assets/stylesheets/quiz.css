@@ -1,6 +1,8 @@
 @media (max-width: 480px) {
   .pokemon-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2列に変更 */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* すべての列に同じ比率で空間を割り当て */
+    gap: 5px; /* セル間の隙間 */
   }
   .pokemon-cell::before {
     padding-top: 100%; /* 既存のスタイルを維持 */
@@ -12,7 +14,7 @@
 
 .question {
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   font-size: 16px;
   color: hsl(0, 0%, 100%);
   font-weight: bold;
@@ -29,7 +31,7 @@
 .pokemon-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3列に分割 */
-  gap: 10px; /* セル間の隙間 */
+  gap: 5px; /* セル間の隙間 */
 }
 
 .pokemon-cell {
@@ -54,12 +56,19 @@
   cursor: pointer;
 }
 
+.separator-line {
+  height: 1px; /* 線の太さ */
+  background-color: #e0e0e0; /* グレーの色 */
+  margin: 10px 0; /* 上下のマージン */
+}
+
 #confirm-button-container {
   text-align: right; /* ボタンを右寄せにする */
   margin-top: 120px; /* 画像エリアとの間隔を開ける */
 }
 
 #confirm {
+  width: 100px;
   display: inline-block; /* インライン要素として表示 */
   background-color: #4990e2; /* 水色 */
   color: #ffffff; /* 文字色は白 */
@@ -210,4 +219,30 @@
 .btn-share {
   background-color: #f2f2f2; /* 任意の背景色 */
   color: black; /* 任意の文字色 */
+}
+
+/* プログレスバー */
+.progress-container {
+  display: flex;
+  justify-content: space-between;
+  width: 95%; /* 全体の横幅を縮める */
+  margin: 0 auto; /* 中央寄せ */
+  margin-top: 20px; /* 上部の余白 */
+  margin-bottom: 20px; /* 下部の余白 */
+}
+
+.progress-bar {
+  width: 18%; /* 5つなので20%ずつにすることもできますが、少し隙間を作るために18%に設定 */
+  height: 10px; /* バーの高さを細くする */
+  background-color: #e0e0e0; /* 初期状態の色 */
+  border-radius: 5px; /* 角を丸くする */
+}
+
+.progress-bar.active {
+  background-color: #4990e2; /* アクティブな状態の色 */
+}
+
+.progress-bar span {
+  color: white; /* テキストの色を白にする */
+  font-size: 12px; /* フォントサイズを小さく（必要に応じて） */
 }

@@ -1,8 +1,8 @@
 <%= stylesheet_link_tag 'quiz', media: 'all', 'data-turbolinks-track': 'reload' %>
 
 <div class="container result-page">
-  <h2>結果画面</h2>
-  <p>正解数: <%= @correct_count %> / <%= @total_questions %></p>
+  <h2>結果</h2>
+  <p><%= @total_questions %>問中<%= @correct_count %>問正解！</p>
   <ul class="answers">
     <% session[:results].each_with_index do |result, index| %>
       <li class="answer">
