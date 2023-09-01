@@ -6,8 +6,13 @@
     <%= stylesheet_link_tag 'quiz', media: 'all', 'data-turbolinks-track': 'reload' %>
 </head>
 <body>
-    <h1>クイズ画面</h1>
-    <h2><%= @current_question_number %>/<%= @total_questions %>問目</h2>
+    <div class="progress-container">
+      <% (1..5).each do |i| %>
+        <div class="progress-bar <%= 'active' if i <= @current_question_number %>">
+          <!--<%= i %>-->
+        </div>
+      <% end %>
+    </div>
     <h1 class="question"><span class="type-name"><%= t("types.#{@type.name}") %>タイプ</span><br>のポケモンの画像を全て選択してください。</h1>
 
     <div class="pokemon-grid">
@@ -21,6 +26,8 @@
       <% end %>
     </div>
 
+    <div class="separator-line"></div>
+
     <div id="confirm-button-container">
       <div id="button-and-icons">
         <!-- アイコンを横並びにするコンテナ -->
@@ -29,7 +36,7 @@
           <%= image_tag 'headphones.svg', class: 'icon' %>
           <%= image_tag 'info-circle.svg', class: 'icon' %>
         </div>
-        <form id="quiz-form" action="/quiz/confirm" method="post">
+        <form id="quiz-form" action="/quiz/confirm" method="post" data-turbolinks="false">
           <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
           <input type="hidden" id="selected_pokemons" name="selected_pokemons" value="">
           <button id="confirm" type="submit">確認</button>

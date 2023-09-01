@@ -59,3 +59,4 @@ production:
   database: app_production
   username: app
   password: <%= ENV["APP_DATABASE_PASSWORD"] %>
+  host: 66.241.124.177
