@@ -246,3 +246,58 @@
   color: white; /* テキストの色を白にする */
   font-size: 12px; /* フォントサイズを小さく（必要に応じて） */
 }
+
+/* 円形プログレスバーのスタイリング */
+.circular-progress-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+}
+
+.circular-progress {
+  width: 100%;
+  height: 100%;
+}
+
+.circular-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 10;
+}
+
+.circular-progress-label {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.circular-progress-big-number {
+  font-size: 48px;
+  line-height: 1;
+}
+
+.small-text {
+  font-size: 24px;
+  vertical-align: bottom;
+}
+
+.circular-bar {
+  fill: none;
+  stroke: #4990e2;
+  stroke-width: 10;
+  stroke-dasharray: 282.6; /* 2 * pi * 45 */
+  stroke-dashoffset: var(--stroke-dashoffset-end, 282.6);
+  transform-origin: center;
+  transform: rotate(-90deg);
+  /* animation: progress 1s ease-out forwards; */
+}
+
+@keyframes progress {
+  to {
+    stroke-dashoffset: var(--stroke-dashoffset-end, 282.6);
+  }
+}
