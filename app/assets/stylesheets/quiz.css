@@ -247,6 +247,56 @@
   font-size: 12px; /* フォントサイズを小さく（必要に応じて） */
 }
 
+/* 円形プログレスバーのスタイル */
+.progress-circle {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.progress-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg); /* ここで90度反時計回りに回転 */
+}
+
+.progress-background,
+.progress-bar {
+  fill: none;
+  stroke-width: 5;
+}
+
+.progress-background {
+  stroke: #eee;
+}
+
+.progress-bar {
+  stroke: #4990e2;
+  stroke-dasharray: 301.6px; /* 円周 = 2 * π * r (r=48) */
+  stroke-dashoffset: 301.6px; /* 初期状態でのオフセット（円周と同じ値） */
+}
+
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.2; /* 行の高さを調整 */
+}
+
+.big-number {
+  font-size: 24px;
+}
+
+/* 画面中央に配置するためのスタイル */
+.progress-circle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 15vh; /* 画面の高さに合わせる */
+=======
 /* 円形プログレスバーのスタイリング */
 .circular-progress-container {
   position: relative;

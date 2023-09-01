@@ -1,15 +1,17 @@
 <%= stylesheet_link_tag 'quiz', media: 'all' %>
 
 <div class="container result-page">
-  <div class="circular-progress-container">
-    <svg class="circular-progress" viewBox="0 0 100 100">
-      <circle class="circular-bg" cx="50" cy="50" r="45"></circle>
-      <circle class="circular-bar" cx="50" cy="50" r="45" style="stroke-dashoffset: <%= 282.6 - (282.6 * @correct_count / 5.0) %>;"></circle>
-    </svg>
-    <div class="circular-progress-label">
-      <span class="circular-progress-big-number"><%= @correct_count %></span><span class="small-text">/5問</span><br>
-      正解！
-    </div>
+  <h2>結果</h2>
+  <div class="progress-circle-container">
+<div class="progress-circle">
+  <svg class="progress-svg">
+    <circle class="progress-background" cx="50%" cy="50%" r="48%"></circle>
+    <circle class="progress-bar" cx="50%" cy="50%" r="48%" style="stroke-dashoffset: <%= 301.6 - ((@correct_count / @total_questions.to_f) * 301.6) %>px;"></circle>
+  </svg>
+  <div class="progress-text">
+    <span class="big-number"><%= @correct_count %></span><span>/5問</span><br>正解！
+  </div>
+</div>
   </div>
 
   <ul class="answers">
