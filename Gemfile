@@ -12,7 +12,7 @@ gem 'rails', '~> 7.0.6'
 gem 'sprockets-rails'
 
 # Use mysql as the database for Active Record
-gem 'mysql2', '~> 0.5'
+# gem 'mysql2', '~> 0.5'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
@@ -32,6 +32,7 @@ gem 'cssbundling-rails'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
 
+# gem 'pg'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 
@@ -59,6 +60,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rspec-rails', '~> 5.0'
   gem 'rubocop', require: false
+  gem 'mysql2', '~> 0.5'
 end
 
 group :test do
@@ -77,3 +79,7 @@ group :development do
 end
 
 # gem "dockerfile-rails", ">= 1.5", :group => :development
+
+group :production do
+  gem 'pg', '~> 1.2'
+end
