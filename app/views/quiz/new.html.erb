@@ -36,7 +36,7 @@
           <%= image_tag 'headphones.svg', class: 'icon' %>
           <%= image_tag 'info-circle.svg', class: 'icon' %>
         </div>
-        <form id="quiz-form" action="/quiz/confirm" method="post">
+        <form id="quiz-form" action="/quiz/confirm" method="post" data-turbolinks="false">
           <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
           <input type="hidden" id="selected_pokemons" name="selected_pokemons" value="">
           <button id="confirm" type="submit">確認</button>

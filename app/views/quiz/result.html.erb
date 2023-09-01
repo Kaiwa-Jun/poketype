@@ -1,4 +1,4 @@
-<%= stylesheet_link_tag 'quiz', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= stylesheet_link_tag 'quiz', media: 'all' %>
 
 <div class="container result-page">
   <h2>結果</h2>
@@ -24,12 +24,7 @@
         </h3>
 
         <p><%= result['correct'] ? '正解！' : '不正解' %></p>
-        <!--<% result['all_pokemons'].each do |pokemon_id| %>
-          <% pokemon = Pokemon.find_by(id: pokemon_id) %>
-          <% if pokemon.present? %>
-            <%= "Pokemon Name: #{pokemon.name}, Type ID: #{pokemon.type_id}, Secondary Type ID: #{pokemon.secondary_type_id}, Fake Type ID: #{pokemon.fake_type_id}" %><br>
-          <% end %>
-        <% end %>-->
+
 
         <% if result['all_pokemons'].present? %>
           <div class="pokemon-grid">
@@ -82,3 +77,21 @@
     cursor: default !important;
   }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const circle = document.querySelector(".circular-bar");
+    const correctCount = <%= @correct_count %>;
+    const circumference = 282.6;
+    const perQuestionLength = circumference / 5.0;
+    const correctLength = perQuestionLength * correctCount;
+
+    circle.style.strokeDasharray = `${circumference} ${circumference}`;
+    circle.style.strokeDashoffset = circumference; // 初期値を設定
+
+    setTimeout(() => {
+      circle.style.transition = `stroke-dashoffset 1s ease-out`;
+      circle.style.strokeDashoffset = circumference - correctLength; // 正解数に基づいて値を設定
+    }, 10);
+  });
+</script>

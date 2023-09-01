@@ -1,7 +1,5 @@
-# This file is used by Rack-based servers to start the application.
-# frozen_string_literal: true
-
-require_relative "config/environment"
+require_relative 'config/environment'
+# set :bind, '0.0.0.0'
+# set :port, 3000
 
 run Rails.application
-Rails.application.load_server
