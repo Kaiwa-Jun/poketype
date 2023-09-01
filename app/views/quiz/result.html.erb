@@ -2,7 +2,18 @@
 
 <div class="container result-page">
   <h2>結果</h2>
-  <p><%= @total_questions %>問中<%= @correct_count %>問正解！</p>
+  <div class="progress-circle-container">
+<div class="progress-circle">
+  <svg class="progress-svg">
+    <circle class="progress-background" cx="50%" cy="50%" r="48%"></circle>
+    <circle class="progress-bar" cx="50%" cy="50%" r="48%" style="stroke-dashoffset: <%= 301.6 - ((@correct_count / @total_questions.to_f) * 301.6) %>px;"></circle>
+  </svg>
+  <div class="progress-text">
+    <span class="big-number"><%= @correct_count %></span><span>/5問</span><br>正解！
+  </div>
+</div>
+  </div>
+
   <ul class="answers">
     <% session[:results].each_with_index do |result, index| %>
       <li class="answer">
