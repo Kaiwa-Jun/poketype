@@ -52,10 +52,10 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
+  <<: *default
   adapter: postgresql
   encoding: unicode
-  database: app_production
-  pool: 5
-  username: app
-  password: <%= ENV["APP_DATABASE_PASSWORD"] %>
-  host: 66.241.124.177
+  database: <%= ENV['POSTGRES_DB'] %>
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  host: <%= ENV['POSTGRES_HOST'] %>
