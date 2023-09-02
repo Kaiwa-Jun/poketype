@@ -21,6 +21,7 @@ services:
     environment:
       TZ: Asia/Tokyo
       APP_DATABASE_PASSWORD: password
+      SECRET_KEY_BASE: "7a03ecab408e8bc75bf6f5c5a8dd5a92b9cb603cf220ac70f8fcc3961af3c17390858c8483ecbc609e02abce996a30f3b1562227910e2e86a09eb1892aa1735b"
     ports:
       - "3000:3000"
     depends_on:
