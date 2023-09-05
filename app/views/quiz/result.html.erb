@@ -88,13 +88,41 @@
 </style>
 
 <script>
-  document.addEventListener('turbo:load', function() {
-    const correctCount = <%= @correct_count %>;
-    const totalQuestions = 5; // トータルの質問数
-    const circle = document.querySelector('.quiz-progress-bar');
-    const circumference = 603.2; // 2 * Math.PI * 48% of 200px
-    const offset = circumference - ((correctCount / totalQuestions) * circumference);
+document.addEventListener('turbo:load', function() {
+  // 既存のインターバルをクリア（グローバル変数を使っています）
+  if (window.quizInterval) {
+    clearInterval(window.quizInterval);
+  }
 
-    circle.style.strokeDashoffset = offset;
-  });
+  const correctCount = <%= @correct_count %>;
+  const totalQuestions = 5;
+  const circle = document.querySelector('.quiz-progress-bar');
+  const circumference = 603.2;
+
+  // ここで初期状態にリセット
+  circle.style.strokeDashoffset = circumference;
+
+  const initialOffset = circumference;
+  const finalOffset = circumference - ((correctCount / totalQuestions) * circumference);
+  let currentOffset = initialOffset;
+  const step = (initialOffset - finalOffset) / 100;
+  const intervalTime = 10;
+
+  window.quizInterval = setInterval(() => {
+    currentOffset -= step;
+
+    if (currentOffset <= finalOffset) {
+      currentOffset = finalOffset;
+      clearInterval(window.quizInterval);
+    }
+
+    circle.style.strokeDashoffset = currentOffset;
+  }, intervalTime);
+});
+
+
+
 </script>
+
+
+
