@@ -169,11 +169,19 @@ class QuizController < ApplicationController
     redirect_to quiz_result_path and return if session[:question_number] > @total_questions
   end
 
+  # def setup_quiz_type
+  #   excluded_types = %w[unknown shadow]
+  #   @type = Type.where.not(name: excluded_types).order("RAND()").first
+  #   redirect_to some_error_page_path and return if @type.nil?
+  # end
+
   def setup_quiz_type
     excluded_types = %w[unknown shadow]
-    @type = Type.where.not(name: excluded_types).order("RAND()").first
+    random_function = ActiveRecord::Base.connection.adapter_name == 'PostgreSQL' ? 'RANDOM()' : 'RAND()'
+    @type = Type.where.not(name: excluded_types).order(random_function).first
     redirect_to some_error_page_path and return if @type.nil?
   end
+
 
   def set_question_number
     session[:question_number] ||= 0
