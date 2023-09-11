@@ -179,7 +179,7 @@ class QuizController < ApplicationController
     excluded_types = %w[unknown shadow]
     random_function = ActiveRecord::Base.connection.adapter_name == 'PostgreSQL' ? 'RANDOM()' : 'RAND()'
     @type = Type.where.not(name: excluded_types).order(random_function).first
-    redirect_to some_error_page_path and return if @type.nil?
+    # redirect_to some_error_page_path and return if @type.nil?
   end
 
 
