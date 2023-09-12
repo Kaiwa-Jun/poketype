@@ -217,6 +217,7 @@ class QuizController < ApplicationController
   end
 
   def select_pokemons(fake_count, same_type_count, diff_type_count)
+    Rails.logger.error("Debug: @type is #{@type.inspect}")
     fake_pokemons = Pokemon.where(fake_type_id: @type.id, is_fake: true)
                            .where("image_url IS NOT NULL")
                            .order('RAND()')
