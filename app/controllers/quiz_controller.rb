@@ -189,16 +189,6 @@ class QuizController < ApplicationController
     session[:results] ||= []
   end
 
-  def get_additional_pokemons(fake_pokemons, same_type_pokemons, diff_type_pokemons, total_needed, total_have)
-    return [] if total_needed <= total_have
-
-    excluded_ids = fake_pokemons.map(&:id) + same_type_pokemons.map(&:id) + diff_type_pokemons.map(&:id)
-    Pokemon.where.not(id: excluded_ids)
-           .order('RAND()')
-           .limit(total_needed - total_have)
-           .to_a
-  end
-
   def set_pokemon_counts
     case session[:question_number]
     when 1
@@ -216,25 +206,39 @@ class QuizController < ApplicationController
     end
   end
 
+  def get_additional_pokemons(fake_pokemons, same_type_pokemons, diff_type_pokemons, total_needed, total_have)
+    return [] if total_needed <= total_have
+
+    excluded_ids = fake_pokemons.map(&:id) + same_type_pokemons.map(&:id) + diff_type_pokemons.map(&:id)
+    random_function = ActiveRecord::Base.connection.adapter_name == 'PostgreSQL' ? 'RANDOM()' : 'RAND()'
+    Pokemon.where.not(id: excluded_ids)
+           .order(random_function)
+           .limit(total_needed - total_have)
+           .to_a
+  end
+
   def select_pokemons(fake_count, same_type_count, diff_type_count)
-    Rails.logger.error("Debug: @type is #{@type.inspect}")
+    random_function = ActiveRecord::Base.connection.adapter_name == 'PostgreSQL' ? 'RANDOM()' : 'RAND()'
     fake_pokemons = Pokemon.where(fake_type_id: @type.id, is_fake: true)
                            .where("image_url IS NOT NULL")
-                           .order('RAND()')
+                           .order(random_function)
                            .limit(fake_count)
                            .to_a
+
     same_type_pokemons = Pokemon.where('(type_id = ? OR secondary_type_id = ?)', @type.id, @type.id)
                                 .where.not(id: fake_pokemons.map(&:id))
                                 .where("image_url IS NOT NULL")
-                                .order('RAND()')
+                                .order(random_function)
                                 .limit(same_type_count)
                                 .to_a
+
     diff_type_pokemons = Pokemon.where.not('(type_id = ? OR secondary_type_id = ?)', @type.id, @type.id)
                                 .where.not(id: fake_pokemons.map(&:id) + same_type_pokemons.map(&:id))
                                 .where("image_url IS NOT NULL")
-                                .order('RAND()')
+                                .order(random_function)
                                 .limit(diff_type_count)
                                 .to_a
+
     [fake_pokemons, same_type_pokemons, diff_type_pokemons]
   end
 end
