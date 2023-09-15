@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EHRT8705R7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-EHRT8705R7');
+    </script>
     <title>App</title>
     <%= yield :meta_tags %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -10,7 +17,6 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
-
   <body class="container py-3">
     <%= render "shared/header" %>
     <main>
