@@ -72,7 +72,7 @@
   </ul>
   <div class="button-container">
     <%= link_to 'もう一度', quiz_restart_path, class: 'btn btn-primary' %>
-    <a href="https://twitter.com/intent/tweet?text=<%= CGI.escape("正解数: #{@correct_count} / #{@total_questions} でした！ / クイズURL: https://your-app-url.com/") %>" target="_blank" style="background-color: #0f1419; color: #fff;" class="btn btn-twitter">
+    <a href="https://twitter.com/intent/tweet?text=<%= CGI.escape("正解数: #{@correct_count} / #{@total_questions} でした！ / クイズURL: https://poketype-c68682b46016.herokuapp.com/quiz/result") %>" target="_blank" style="background-color: #0f1419; color: #fff;" class="btn btn-twitter">
       &#x1D54F;でシェア
     </a>
   </div>
@@ -89,7 +89,6 @@
 
 <script>
 document.addEventListener('turbo:load', function() {
-  // 既存のインターバルをクリア（グローバル変数を使っています）
   if (window.quizInterval) {
     clearInterval(window.quizInterval);
   }
