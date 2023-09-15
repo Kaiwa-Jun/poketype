@@ -25,7 +25,7 @@
 
   <div class="button-container">
     <%= link_to 'もう一度', quiz_restart_path, class: 'btn btn-primary' %>
-      <a href="https://twitter.com/intent/tweet?text=<%= CGI.escape("正解数: #{@correct_count} / #{@total_questions} でした！ / クイズURL: https://poketype-c68682b46016.herokuapp.com/") %>" target="_blank" style="background-color: #0f1419; color: #fff;" class="btn btn-twitter">
+      <a href="https://twitter.com/intent/tweet?text=<%= ERB::Util.url_encode("正解数: #{@correct_count} / #{@total_questions} でした！\nhttps://poketype-c68682b46016.herokuapp.com/") %>" target="_blank" style="background-color: #0f1419; color: #fff;" class="btn btn-twitter">
         &#x1D54F;でシェア
       </a>
   </div>
@@ -79,7 +79,7 @@
   </ul>
   <div class="button-container">
     <%= link_to 'もう一度', quiz_restart_path, class: 'btn btn-primary' %>
-      <a href="https://twitter.com/intent/tweet?text=<%= CGI.escape("正解数: #{@correct_count} / #{@total_questions} でした！ / クイズURL: https://poketype-c68682b46016.herokuapp.com/") %>" target="_blank" style="background-color: #0f1419; color: #fff;" class="btn btn-twitter">
+      <a href="https://twitter.com/intent/tweet?text=<%= ERB::Util.url_encode("正解数: #{@correct_count} / #{@total_questions} でした！\nhttps://poketype-c68682b46016.herokuapp.com/") %>" target="_blank" style="background-color: #0f1419; color: #fff;" class="btn btn-twitter">
         &#x1D54F;でシェア
       </a>
   </div>
