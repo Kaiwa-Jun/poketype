@@ -25,7 +25,7 @@ unknown = Type.create!(name: "unknown")
 shadow = Type.create!(name: "shadow")
 
 # Pokemonを作成する際に、先ほど作成したTypeのオブジェクトを使用
-Pokemon.create!(name: "bulbasaur", type_id: 12, image_url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", secondary_type_id: 4)
+Pokemon.create!(name: "bulbasaur", type: grass, image_url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", secondary_type: poison)
 Pokemon.create!(name: "ivysaur", type_id: 12, image_url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png", secondary_type_id: 4)
 Pokemon.create!(name: "venusaur", type_id: 12, image_url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png", secondary_type_id: 4)
 Pokemon.create!(name: "charmander", type_id: 10, image_url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png")
